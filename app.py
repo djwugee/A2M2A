@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_file, Response
+from flask import Flask, request, jsonify, send_file, Response, render_template
 import os
 import subprocess
 import time
@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
 OUTPUT_FOLDER = "output"
-SOUNDFONT = "/soundfonts/FluidR3_GM.sf2"
+SOUNDFONT = "/app/soundfonts/VintageDreamsWaves-v2.sf2"  # Updated SoundFont path
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
@@ -21,6 +21,10 @@ def send_status():
                 yield f"data: {status_messages[-1]}\n\n"
             time.sleep(1)
     return Response(event_stream(), mimetype="text/event-stream")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/status')
 def status():
