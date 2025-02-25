@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio to MIDI to Audio</title>
+</head>
+<body>
+    <h1>Upload Audio File</h1>
+    <input type="file" id="audioFile">
+    <button onclick="uploadFile()">Convert</button>
+    <a id="downloadLink" style="display:none">Download MP3</a>
+    <pre id="output">Waiting for upload...</pre>
+
+    <script>
+        function uploadFile() {
+            let fileInput = document.getElementById('audioFile').files[0];
+            let formData = new FormData();
+            formData.append('file', fileInput);
+
+            fetch('/process', { method: 'POST', body: formData })
+            .then(response => {
+                if (response.ok) return response.blob();
+                throw new Error("Conversion failed");
+            })
+            .then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.getElementById("downloadLink");
+                a.href = url;
+                a.style.display = "block";
+                a.textContent = "Download MP3";
+                a.download = "output.mp3";
+            })
+            .catch(error => document.getElementById('output').textContent = error.message);
+        }
+
+        // Real-time status updates
+        const eventSource = new EventSource("/status");
+        eventSource.onmessage = function(event) {
+            document.getElementById("output").textContent = event.data;
+        };
+    </script>
+</body>
+</html>
