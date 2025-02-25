@@ -34,7 +34,7 @@ COPY . /app/
 EXPOSE 5000
 
 # Set environment variable for the SoundFont path
-ENV SOUNDFONT_PATH=/app/soundfonts/FluidR3_GM.sf2
+ENV SOUNDFONT_PATH=/app/soundfonts/VintageDreamsWaves-v2.sf2
 
 # Run the Flask application
 CMD ["python", "app.py"]
