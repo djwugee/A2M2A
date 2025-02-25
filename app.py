@@ -3,6 +3,8 @@ import os
 import subprocess
 import time
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 app = Flask(__name__)
 
 UPLOAD_FOLDER = "uploads"
