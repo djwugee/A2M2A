@@ -25,8 +25,8 @@ WORKDIR /app
 RUN mkdir -p uploads output soundfonts
 
 # Download and add a default SoundFont
-RUN wget https://github.com/FluidSynth/fluidsynth-soundfonts/raw/master/FluidR3_GM.sf2 -O /app/soundfonts/FluidR3_GM.sf2
-
+# Download and add a default SoundFont (updated URL)
+RUN wget https://github.com/FluidSynth/fluidsynth/raw/724b8c892d8335ad3bc808c675815eb9eaee6bc9/sf2/VintageDreamsWaves-v2.sf2 -O /app/soundfonts/VintageDreamsWaves-v2.sf2
 # Copy application files into the container
 COPY . /app/
 
